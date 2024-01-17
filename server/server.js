@@ -39,10 +39,23 @@ app.use(cors());
 
 app.get('/', (req, res) => {
   const sql = `SELECT * FROM accounts`;
-  // const sql = `SELECT * FROM public.user_accounts`;
+  // const sql = `SELECT * FROM collections WHERE account_id = 3`;
+
   pool.query(sql, (err, result) => {
     if(err) return res.json({Message: 'Error in server', err});
-    return res.json(result);
+    return res.json(result.rows);
+  })
+})
+
+app.get('/collections', (req, res) => {
+  // const sql = `SELECT * FROM accounts`;
+  // const sql = `SELECT * FROM public.user_accounts`;
+  const sql = `SELECT * FROM collections`;
+  // const sql = `SELECT * FROM collections WHERE account_id = 3`;
+
+  pool.query(sql, (err, result) => {
+    if(err) return res.json({Message: 'Error in server', err});
+    return res.json(result.rows);
   })
 })
 
@@ -82,7 +95,6 @@ app.post('/login', (req, res) => {
   })
 });
 
-// app.listen(4000, () => console.log("Server on localhost: 4000"));
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

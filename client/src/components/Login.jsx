@@ -6,8 +6,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import Swal from 'sweetalert2';
-import NavBar from './NavBar';
-
 
 function Login() {
   const [values, setValues] = useState({
@@ -64,8 +62,6 @@ function Login() {
   };
 
   return (
-    <>
-    <NavBar />
     <div className="container">
       <div className='row d-flex justify-content-center align-items-center vh-100'>
         <div className="col-md-4 border rounded-4 p-4 my-5 shadow p-3 mb-5 bg-body rounded">
@@ -93,7 +89,6 @@ function Login() {
         </div>
       </div>
     </div>
-    </>
   )
 }
 

@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import { AuthContext } from './context/AuthContext';
+import NavBar from './components/NavBar';
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
