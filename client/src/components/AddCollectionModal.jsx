@@ -14,14 +14,20 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
   const [newCollectionData, setNewCollectionData] = useState(initialCollectionData);
 
   const [errors, setErrors] = useState({});
+  const [characterCount, setCharacterCount] = useState(0);
 
   const handleInput = (e) => {
-    setNewCollectionData(prev => ({...prev, [e.target.name]: e.target.value}))
+    const { name, value } = e.target;
+    setNewCollectionData(prev => ({...prev, [e.target.name]: e.target.value}));
+    if (name === 'description') {
+      setCharacterCount(value.length);
+    }
   };
 
   const resetForm = () => {
     setNewCollectionData(initialCollectionData);
     setErrors({});
+    setCharacterCount(0);
   };
 
   const handleSubmit = async () => {
@@ -53,7 +59,7 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
   };
 
   return (
-    <Modal show={show} onHide={handleCloseModal}>
+    <Modal show={show} onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
         <Modal.Title>Add New Collection</Modal.Title>
       </Modal.Header>
@@ -80,16 +86,17 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
               value={newCollectionData.description}
               onChange={handleInput}
             />
+            <div className='text-muted fw-lighter'>{characterCount} / 255</div>
             {errors.description && <span className='text-danger'>{errors.description}</span>}
 
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={handleCloseModal}>
+        {/* <Button variant='secondary' onClick={handleCloseModal}>
           Close
-        </Button>
-        <Button variant='primary' onClick={handleSubmit}>
+        </Button> */}
+        <Button variant='outline-success' onClick={handleSubmit}>
           Save Collection
         </Button>
       </Modal.Footer>

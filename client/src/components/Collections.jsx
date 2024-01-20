@@ -83,9 +83,9 @@ const Collections = ({ userData }) => {
         <OpenCollectionModal
           show={openCollectionModal}
           onHide={handleCloseCollectionModal}
-          title={selectedCollection.title}
-          description={selectedCollection.description}
-          id={selectedCollection.id}
+          // title={selectedCollection.title}
+          // description={selectedCollection.description}
+          // id={selectedCollection.id}
           item={selectedCollection}
           fetchCollections={fetchCollections}
         />

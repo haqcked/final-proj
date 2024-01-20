@@ -31,10 +31,10 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item}) {
         <p>{item.description}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={handleDelete}>
+        <Button variant="outline-danger" onClick={handleDelete}>
           Delete
         </Button>
-        <Button onClick={onHide}>Close</Button>
+        {/* <Button onClick={onHide}>Close</Button> */}
       </Modal.Footer>
     </Modal>
   );
