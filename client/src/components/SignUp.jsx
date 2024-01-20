@@ -20,31 +20,33 @@ function SignUp() {
     setValues(prev => ({...prev, [e.target.name]: e.target.value}))
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = Validation(values);
     setErrors(validationErrors);
     console.log(values);
-    if(validationErrors.name === "" &&
+
+    if (
+      validationErrors.name === "" &&
       validationErrors.email === "" &&
       validationErrors.password === ""
-      ) {
-        axios
-        .post('http://localhost:4000/sign-up', values)
-        // .post('http://john.db.elephantsql.com/sign-up', values)
-        .then((res) => {
-          console.log(res);
-          navigate('/login');
-          Swal.fire({
-            icon: 'success',
-            title: 'Account created successfully!',
-            showConfirmButton: false,
-            timer: 2000
-          });
-        })
-      .catch(err => console.log(err));
+    ) {
+      try {
+        const res = await axios.post('http://localhost:4000/sign-up', values);
+        console.log(res);
+        navigate('/login');
+        Swal.fire({
+          icon: 'success',
+          title: 'Account created successfully!',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
+
 
   return (
     <div className="container">
@@ -70,10 +72,10 @@ function SignUp() {
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 className="rounded-4"
-                onChange={handleInput}
                 type="email"
                 placeholder="email@gmail.com"
                 name='email'
+                onChange={handleInput}
               />
               {errors.email && <span className='text-danger'>{errors.email}</span>}
 
@@ -83,10 +85,10 @@ function SignUp() {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 className="rounded-4"
-                onChange={handleInput}
                 type="password"
                 placeholder="Password"
                 name='password'
+                onChange={handleInput}
               />
               {errors.password && <span className='text-danger'>{errors.password}</span>}
 

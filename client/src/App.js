@@ -6,6 +6,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import { AuthContext } from './context/AuthContext';
 import NavBar from './components/NavBar';
+import AddCollectionModal from './components/AddCollectionModal';
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -28,6 +29,7 @@ function App() {
             currentUser ? (
               <RequireAuth>
                 <Home />
+                <AddCollectionModal />
               </RequireAuth>
             ) : (
               <Navigate to="/login" />

@@ -7,61 +7,66 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// app.get("/adduser", (req, res) => {
-//   console.log(req.body);
-//   res.send("Response received: " + req.body);
-// });
+// getting userData
+app.get('/', async (req, res) => {
+  try {
+    const { email } = req.query;
+    const sql = `SELECT * FROM accounts WHERE email = $1`;
 
-// app.post("/adduser", (req, res) => {
-//   const name = req.body["name"];
-//   const email = req.body["email"];
-//   const password = req.body["password"];
+    const result = await pool.query(sql, [email]);
+    res.json(result.rows);
+  } catch (err) {
+    res.json({ Message: 'Error in server', err });
+  }
+});
 
-//   console.log("name: ", name);
-//   console.log("email: ", email);
-//   console.log("password: ", password);
+// getting the collections based on account_id
+app.get('/collections/:accountId', async (req, res) => {
+  try {
+    const accountId = req.params.accountId;
+    const sql = `SELECT * FROM collections WHERE account_id = $1`;
 
-//   const insertSTMT = `INSERT INTO accounts ( name, email, password ) VALUES ( '${name}', '${email}', '${password}' );`
-
-//   pool
-//     .query(insertSTMT)
-//     .then((response) => {
-//       console.log("data saved");
-//       console.log(response);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-
-//   console.log(req.body)
-//   res.send("Response received: " + req.body);
-// });
-
-app.get('/', (req, res) => {
-  const sql = `SELECT * FROM accounts`;
-  // const sql = `SELECT * FROM collections WHERE account_id = 3`;
-
-  pool.query(sql, (err, result) => {
-    if(err) return res.json({Message: 'Error in server', err});
+    const result = await pool.query(sql, [accountId]);
     return res.json(result.rows);
-  })
-})
+  } catch (err) {
+    return res.json({ Message: 'Error in server', err });
+  }
+});
 
-app.get('/collections', (req, res) => {
-  // const sql = `SELECT * FROM accounts`;
-  // const sql = `SELECT * FROM public.user_accounts`;
-  const sql = `SELECT * FROM collections`;
-  // const sql = `SELECT * FROM collections WHERE account_id = 3`;
+// Add new collection
+app.post('/collections', async (req, res) => {
+  try {
+    const { title, description, account_id } = req.body;
+    const sql = `INSERT INTO collections (title, description, account_id) VALUES ($1, $2, $3)`;
+    const values = [title, description, account_id];
 
-  pool.query(sql, (err, result) => {
-    if(err) return res.json({Message: 'Error in server', err});
-    return res.json(result.rows);
-  })
-})
+    await pool.query(sql, values);
+
+    return res.json({ success: true, message: 'Collection added successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Delete a collection
+app.delete('/collections/:collectionId', async (req, res) => {
+  try {
+    const collectionId = req.params.collectionId;
+    const sql = `DELETE FROM collections WHERE id = $1`;
+
+    await pool.query(sql, [collectionId]);
+
+    return res.json({ success: true, message: 'Collection deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 
 app.post('/sign-up', (req, res) => {
   const sql = `INSERT INTO accounts (name, email, password) VALUES ($1, $2, $3)`;
-  // const sql = `INSERT INTO public.user_accounts (name, email, password) VALUES ($1, $2, $3)`;
   const values = [
     req.body.name,
     req.body.email,

@@ -8,20 +8,15 @@ const Home = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/')
-      .then(res => setUserData(findAccountByEmail(currentUser.email, res.data)))
+    axios.get('http://localhost:4000/', { params: { email: currentUser.email } })
+      .then(res => setUserData(res.data[0]))
       .catch(err => console.log(err));
   }, [currentUser.email]);
-
-  const findAccountByEmail = (email, data) => {
-    return data.find(item => item.email === email);
-  };
 
   return (
     <>
       <div className='text-center m-4'>Welcome to your collection</div>
       <div className='container bg-light rounded-4'>
-        {/* <div>{userData ? userData.name : 'Loading...'}</div> */}
         <Collections userData={userData} />
       </div>
     </>
