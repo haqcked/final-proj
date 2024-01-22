@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import CollectionValidation from '../validations/CollectionValidation';
+import Swal from 'sweetalert2';
 
 
 const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) => {
@@ -34,10 +35,7 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
     const validationErrors = CollectionValidation(newCollectionData);
     setErrors(validationErrors);
 
-    if (
-      validationErrors.title === "" &&
-      validationErrors.description === ""
-    ) {
+    if (validationErrors.title === "" && validationErrors.description === "") {
       try {
         await axios.post('http://localhost:4000/collections', {
           title: newCollectionData.title,
@@ -47,11 +45,14 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
         await fetchCollections();
         resetForm();
         handleClose();
+        Swal.fire('Success!', 'New collection added successfully.', 'success');
       } catch (error) {
         console.error(error);
+        Swal.fire('Error!', 'Something went wrong while adding the collection.', 'error');
       }
     }
   };
+
 
   const handleCloseModal = () => {
     resetForm();
@@ -59,7 +60,7 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
   };
 
   return (
-    <Modal show={show} onHide={handleCloseModal} centered>
+    <Modal show={show} onHide={handleCloseModal} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title>Add New Collection</Modal.Title>
       </Modal.Header>

@@ -22,8 +22,8 @@ function NavBar() {
               </>
               ) : (
                 <>
-                  <Link to="/login" className="btn btn-primary me-2">Sign In</Link>
-                  <Link to="/sign-up" className="btn btn-success">Sign Up</Link>
+                  <Link to="/login" className="btn btn-outline-primary me-2">Sign In</Link>
+                  <Link to="/sign-up" className="btn btn-outline-success">Sign Up</Link>
                 </>
               )}
           </Navbar.Text>

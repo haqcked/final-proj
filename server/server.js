@@ -49,6 +49,25 @@ app.post('/collections', async (req, res) => {
   }
 });
 
+// Edit a collection
+app.put('/collections/:collectionId', async (req, res) => {
+  try {
+    const collectionId = req.params.collectionId;
+    const { title, description } = req.body;
+
+    const sql = `UPDATE collections SET title = $1, description = $2 WHERE id = $3`;
+    const values = [title, description, collectionId];
+
+    await pool.query(sql, values);
+
+    return res.json({ success: true, message: 'Collection updated successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
 // Delete a collection
 app.delete('/collections/:collectionId', async (req, res) => {
   try {
