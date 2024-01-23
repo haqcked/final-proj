@@ -36,7 +36,7 @@ function Login() {
               icon: 'success',
               title: 'Login successful!',
               showConfirmButton: false,
-              timer: 2000
+              timer: 1500
             });
             setTimeout(() => {
               navigate('/');

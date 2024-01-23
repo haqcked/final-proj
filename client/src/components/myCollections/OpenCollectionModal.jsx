@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import EditCollectionModal from './EditCollectionModal';
 import Swal from 'sweetalert2';
 
 
-function OpenCollectionModal({ show, onHide, fetchCollections, item}) {
+function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const handleDelete = async () => {
@@ -25,7 +25,13 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item}) {
         await axios.delete(`http://localhost:4000/collections/${item.id}`);
         onHide();
         fetchCollections();
-        Swal.fire('Deleted!', 'Your collection has been deleted.', 'success');
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Your collection has been deleted.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
       }
     } catch (error) {
       console.error('Error deleting collection:', error);
@@ -57,11 +63,24 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item}) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {item.title}
+            <h3>{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</h3>
+            <p className='text-muted small fst-italic'>by {userData.name}</p>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{item.description}</p>
+        <p>Description: {item.description}</p>
+        {/* <hr className="mb-4" /> */}
+        <ol>
+          {item.custom_string1_name && (
+            <li>{item.custom_string1_name.charAt(0).toUpperCase() + item.custom_string1_name.slice(1)}</li>
+          )}
+          {item.custom_string2_name && (
+            <li>{item.custom_string2_name.charAt(0).toUpperCase() + item.custom_string2_name.slice(1)}</li>
+          )}
+          {item.custom_string3_name && (
+            <li>{item.custom_string3_name.charAt(0).toUpperCase() + item.custom_string3_name.slice(1)}</li>
+          )}
+        </ol>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-primary" onClick={handleEdit}>
@@ -70,17 +89,16 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item}) {
         <Button variant="outline-danger" onClick={handleDelete}>
           Delete
         </Button>
-        {/* <Button onClick={onHide}>Close</Button> */}
       </Modal.Footer>
       {showEditModal && (
-          <EditCollectionModal
-            show={showEditModal}
-            onHide={handleCloseEditModal}
-            fetchCollections={fetchCollections}
-            item={item}
-            onSave={handleSaveEdit}
-          />
-        )}
+        <EditCollectionModal
+          show={showEditModal}
+          onHide={handleCloseEditModal}
+          fetchCollections={fetchCollections}
+          item={item}
+          onSave={handleSaveEdit}
+        />
+      )}
     </Modal>
   );
 }

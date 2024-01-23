@@ -2,15 +2,17 @@ import React, { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function NavBar() {
   const { currentUser, handleLogout } = useContext(AuthContext);
+  const location = useLocation();
 
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand>Collection Management System</Navbar.Brand>
+        <Link to="/" className="navbar-brand fw-bolder">CollectionBOOK</Link>
+
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
@@ -20,12 +22,16 @@ function NavBar() {
                 <button className='btn btn-secondary ms-3' onClick={handleLogout}>Logout
                 </button>
               </>
-              ) : (
-                <>
-                  <Link to="/login" className="btn btn-outline-primary me-2">Sign In</Link>
-                  <Link to="/sign-up" className="btn btn-outline-success">Sign Up</Link>
-                </>
-              )}
+            ) : (
+              <>
+                {(location.pathname === '/login' || location.pathname === '/') && (
+                  <Link to="/sign-up" className="btn btn-outline-success me-3">Sign Up</Link>
+                )}
+                {(location.pathname === '/sign-up' || location.pathname === '/') && (
+                  <Link to="/login" className="btn btn-outline-primary">Login</Link>
+                )}
+              </>
+            )}
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>

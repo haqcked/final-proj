@@ -20,6 +20,19 @@ app.get('/', async (req, res) => {
   }
 });
 
+// getting the all collections
+app.get('/collections', async (req, res) => {
+  try {
+    const sql = `SELECT * FROM collections`;
+
+    const result = await pool.query(sql);
+    return res.json(result.rows);
+  } catch (err) {
+    return res.json({ Message: 'Error in server', err });
+  }
+});
+
+
 // getting the collections based on account_id
 app.get('/collections/:accountId', async (req, res) => {
   try {
@@ -36,9 +49,44 @@ app.get('/collections/:accountId', async (req, res) => {
 // Add new collection
 app.post('/collections', async (req, res) => {
   try {
-    const { title, description, account_id } = req.body;
-    const sql = `INSERT INTO collections (title, description, account_id) VALUES ($1, $2, $3)`;
-    const values = [title, description, account_id];
+    const {
+      title,
+      description,
+      account_id,
+      custom_string1_state,
+      custom_string1_name,
+      custom_string2_state,
+      custom_string2_name,
+      custom_string3_state,
+      custom_string3_name,
+    } = req.body;
+
+    const sql = `
+      INSERT INTO collections (
+        title,
+        description,
+        account_id,
+        custom_string1_state,
+        custom_string1_name,
+        custom_string2_state,
+        custom_string2_name,
+        custom_string3_state,
+        custom_string3_name
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    `;
+
+    const values = [
+      title,
+      description,
+      account_id,
+      custom_string1_state,
+      custom_string1_name,
+      custom_string2_state,
+      custom_string2_name,
+      custom_string3_state,
+      custom_string3_name,
+    ];
 
     await pool.query(sql, values);
 
@@ -53,10 +101,42 @@ app.post('/collections', async (req, res) => {
 app.put('/collections/:collectionId', async (req, res) => {
   try {
     const collectionId = req.params.collectionId;
-    const { title, description } = req.body;
+    const {
+      title,
+      description,
+      custom_string1_state,
+      custom_string1_name,
+      custom_string2_state,
+      custom_string2_name,
+      custom_string3_state,
+      custom_string3_name,
+    } = req.body;
 
-    const sql = `UPDATE collections SET title = $1, description = $2 WHERE id = $3`;
-    const values = [title, description, collectionId];
+    const sql = `
+      UPDATE collections
+      SET
+        title = $1,
+        description = $2,
+        custom_string1_state = $3,
+        custom_string1_name = $4,
+        custom_string2_state = $5,
+        custom_string2_name = $6,
+        custom_string3_state = $7,
+        custom_string3_name = $8
+      WHERE id = $9
+    `;
+
+    const values = [
+      title,
+      description,
+      custom_string1_state,
+      custom_string1_name,
+      custom_string2_state,
+      custom_string2_name,
+      custom_string3_state,
+      custom_string3_name,
+      collectionId,
+    ];
 
     await pool.query(sql, values);
 
@@ -83,7 +163,7 @@ app.delete('/collections/:collectionId', async (req, res) => {
   }
 });
 
-
+// SIGH UP
 app.post('/sign-up', (req, res) => {
   const sql = `INSERT INTO accounts (name, email, password) VALUES ($1, $2, $3)`;
   const values = [
@@ -100,6 +180,7 @@ app.post('/sign-up', (req, res) => {
   });
 });
 
+// LOGIN
 app.post('/login', (req, res) => {
   const sql = `SELECT * FROM accounts WHERE email = $1 AND password = $2`;
   const values = [

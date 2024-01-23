@@ -50,16 +50,24 @@ const Collections = ({ userData }) => {
 
   return (
     <>
-      <div className='d-flex justify-content-end pt-3 me-4'>
-        <button className='btn btn-primary' onClick={handleShowModal}>Add New Collection</button>
+      <div className='d-flex justify-content-between align-items-center pt-3 me-4'>
+        <p>
+          {data.length > 0
+            ? `${userData.name}'s Collections: ${data.length}`
+            : 'No Collections'}
+        </p>
+        <button className='btn btn-primary' onClick={handleShowModal}>Add New</button>
       </div>
       <div className='row d-flex justify-content-center align-items-start'>
         {data.length > 0 ? (
           data.map(item => (
-            <Card key={item.id} style={{ width: '18rem', height: '20rem' }} className='my-5 m-3'>
+            <Card key={item.id} style={{ width: '18rem', height: '22rem' }} className='my-5 m-3'>
               <Card.Img className='mt-3' variant="top" src="/folderImg.png" />
               <Card.Body>
-                <Card.Title>{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</Card.Title>
+                <Card.Title>
+                  {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
+                  <p className='text-muted small fst-italic'>by {userData.name}</p>
+                </Card.Title>
                 <Card.Text className='text-muted text-truncate'>
                   {item.description}
                 </Card.Text>
@@ -83,9 +91,7 @@ const Collections = ({ userData }) => {
         <OpenCollectionModal
           show={openCollectionModal}
           onHide={handleCloseCollectionModal}
-          // title={selectedCollection.title}
-          // description={selectedCollection.description}
-          // id={selectedCollection.id}
+          userData={userData}
           item={selectedCollection}
           fetchCollections={fetchCollections}
         />
