@@ -1,9 +1,8 @@
-// Home.js
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import MyCollections from './myCollections/MyCollections';
-import AllCollections from './AllCollections/AllCollections';
+import AllCollections from './allCollections/AllCollections';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -40,13 +39,18 @@ const Home = () => {
   return (
     <div>
       <div className='container my-3'>
-        <Breadcrumb>
+        <Breadcrumb className='fw-bold'>
           <Breadcrumb.Item onClick={handleShowAllCollections} active={showAllCollections}>
             <Link to="/">Home</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item onClick={handleShowMyCollections} active={!showAllCollections}>
             My Collections
           </Breadcrumb.Item>
+          {userData && userData.admin && (
+              <Breadcrumb.Item>
+                <Link to="/admin-dashboard">Admin Dashboard</Link>
+              </Breadcrumb.Item>
+            )}
         </Breadcrumb>
 
         <div className='container bg-light rounded-4'>

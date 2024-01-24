@@ -63,7 +63,7 @@ function Login() {
 
   return (
     <div className="container">
-      <div className='row d-flex justify-content-center align-items-center vh-100'>
+      <div className='row d-flex justify-content-center align-items-start mt-5 vh-100'>
         <div className="col-md-4 border rounded-4 p-4 my-5 shadow p-3 mb-5 bg-body rounded">
           <h2 className="text-center p-4">Login</h2>
           <hr className='mb-4' />

@@ -8,7 +8,7 @@ function ShowCollectionModal({ show, onHide, item, userData }) {
       <Modal.Header closeButton>
         <Modal.Title>
           {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
-          <p className='text-muted small fst-italic'>by User {item.account_id || 'Unknown'}</p>
+          <p className='text-muted fs-6 fst-italic'>by User {item.account_id || 'Unknown'}</p>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

@@ -61,14 +61,14 @@ const Collections = ({ userData }) => {
       <div className='row d-flex justify-content-center align-items-start'>
         {data.length > 0 ? (
           data.map(item => (
-            <Card key={item.id} style={{ width: '18rem', height: '22rem' }} className='my-5 m-3'>
+            <Card key={item.id} style={{ width: '16rem', height: '21rem' }} className='mt-5 m-3 shadow'>
               <Card.Img className='mt-3' variant="top" src="/folderImg.png" />
               <Card.Body>
                 <Card.Title>
                   {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
-                  <p className='text-muted small fst-italic'>by {userData.name}</p>
+                  <p className='text-muted fs-6 fst-italic'>by {userData.name}</p>
                 </Card.Title>
-                <Card.Text className='text-muted text-truncate'>
+                <Card.Text className='text-muted text-truncate' style={{ maxHeight: '60px', overflow: 'hidden' }}>
                   {item.description}
                 </Card.Text>
                 <Button variant="outline-primary" onClick={() => handleOpenCollectionModal(item)}>Open</Button>

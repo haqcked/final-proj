@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import EditCollectionModal from './EditCollectionModal';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons"
 
 
 function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) {
@@ -64,7 +66,7 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) 
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
             <h3>{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</h3>
-            <p className='text-muted small fst-italic'>by {userData.name}</p>
+            <p className='text-muted fs-6 fst-italic'>by {userData.name}</p>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -87,8 +89,11 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) 
           Edit
         </Button>
         <Button variant="outline-danger" onClick={handleDelete}>
-          Delete
+        <FontAwesomeIcon icon={faTrashCan} />
         </Button>
+        {/* <Button variant="outline-danger" onClick={handleDelete}>
+          Delete
+        </Button> */}
       </Modal.Footer>
       {showEditModal && (
         <EditCollectionModal

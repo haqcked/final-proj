@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import ShowCollectionModal from './ShowCollectionModal'; // Import your ShowCollectionModal component
+import ShowCollectionModal from './ShowCollectionModal';
 
 const AllCollections = () => {
   const [data, setData] = useState([]);
@@ -37,14 +37,14 @@ const AllCollections = () => {
     <div className='row d-flex justify-content-center align-items-start'>
       {data.length > 0 ? (
         data.map((item) => (
-          <Card key={item.id} style={{ width: '18rem', height: '22rem' }} className='my-5 m-3'>
+          <Card key={item.id} style={{ width: '16rem', height: '21rem' }} className='mt-5 m-3 shadow'>
             <Card.Img className='mt-3' variant="top" src="/folderImg.png" />
-            <Card.Body>
+            <Card.Body style={{ maxHeight: '14rem', overflow: 'hidden' }}>
               <Card.Title>
                 {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
-                <p className='text-muted small fst-italic'>by User {item.account_id || 'Unknown'}</p>
+                <p className='text-muted fs-6 fst-italic'>by User {item.account_id || 'Unknown'}</p>
               </Card.Title>
-              <Card.Text className='text-muted text-truncate'>
+              <Card.Text className='text-muted text-truncate' style={{ maxHeight: '60px', overflow: 'hidden' }}>
                 {item.description}
               </Card.Text>
               <Button variant="outline-primary" onClick={() => handleShowCollectionModal(item)}>
@@ -58,8 +58,6 @@ const AllCollections = () => {
           <h4>No collections available</h4>
         </div>
       )}
-
-      {/* ShowCollectionModal */}
       {selectedCollection && (
         <ShowCollectionModal
           show={showModal}

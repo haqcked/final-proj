@@ -20,6 +20,53 @@ app.get('/', async (req, res) => {
   }
 });
 
+// getting all user accounts
+app.get('/accounts', async (req, res) => {
+  try {
+    const sql = 'SELECT * FROM accounts';
+    const result = await pool.query(sql);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error in server:', err);
+    res.status(500).json({ Message: 'Error in server', error: err.message });
+  }
+});
+
+// updating user account status to Active/Blocked
+app.put('/update-status/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const sql = 'UPDATE accounts SET status = $1 WHERE ID = $2';
+    const result = await pool.query(sql, [status, id]);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.json({ Message: 'Error in the server' });
+  }
+});
+
+// delete single/multiple user account
+app.delete('/delete-multiple', async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ Message: 'Invalid request. Please provide an array of userdata IDs to delete.' });
+    }
+
+    const sql = 'DELETE FROM accounts WHERE ID = ANY($1)';
+    const result = await pool.query(sql, [ids]);
+
+    return res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ Message: 'Error in the server' });
+  }
+});
+
 // getting the all collections
 app.get('/collections', async (req, res) => {
   try {
@@ -163,7 +210,7 @@ app.delete('/collections/:collectionId', async (req, res) => {
   }
 });
 
-// SIGH UP
+// SIGN UP
 app.post('/sign-up', (req, res) => {
   const sql = `INSERT INTO accounts (name, email, password) VALUES ($1, $2, $3)`;
   const values = [
