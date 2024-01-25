@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/haqcked/final-proj#readme",
   "dependencies": {
-    "if-env": "^1.0.4"
+    "if-env": "^1.0.4",
+    "react-scripts": "^5.0.1"
   }
 }

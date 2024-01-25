@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import MyCollections from './myCollections/MyCollections';
-import AllCollections from './allCollections/AllCollections';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useNavigate } from 'react-router-dom';
 import AdminDashboard from './admin/AdminDashboard';
+import AllCollections from './allCollections/AllCollections';
+
 
 
 const Home = () => {
