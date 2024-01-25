@@ -31,7 +31,6 @@ const Collections = ({ userData }) => {
     fetchCollections();
   }, [userData]);
 
-
   const handleShowModal = () => {
     setModalShow(true);
   };

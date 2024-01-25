@@ -6,7 +6,6 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import { AuthContext } from './context/AuthContext';
 import NavBar from './components/NavBar';
-// import AdminDashboard from './components/admin/AdminDashboard';
 
 
 function App() {
