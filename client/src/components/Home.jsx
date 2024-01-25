@@ -3,63 +3,57 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import MyCollections from './myCollections/MyCollections';
 import AllCollections from './allCollections/AllCollections';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { Link, useNavigate } from 'react-router-dom';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import { useNavigate } from 'react-router-dom';
+import AdminDashboard from './admin/AdminDashboard';
+
 
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
-  const [showAllCollections, setShowAllCollections] = useState(true);
+  const [activeTab, setActiveTab] = useState('allCollections');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedState = localStorage.getItem('breadcrumbActiveState');
-    setShowAllCollections(storedState === 'allCollections');
+    const storedState = localStorage.getItem('activeTab');
+    setActiveTab(storedState || 'allCollections');
 
     axios.get('http://localhost:4000/', { params: { email: currentUser?.email } })
       .then(res => setUserData(res.data[0]))
       .catch(err => console.log(err));
   }, [currentUser]);
 
-  const handleShowAllCollections = () => {
-    setShowAllCollections(true);
-    localStorage.setItem('breadcrumbActiveState', 'allCollections');
-  };
-
-  const handleShowMyCollections = () => {
-    if (!currentUser) {
+  const handleTabSelect = (key) => {
+    if (key === 'myCollections' && !currentUser) {
       navigate('/login');
-      return null;
+    } else {
+      setActiveTab(key);
+      localStorage.setItem('activeTab', key);
     }
-
-    setShowAllCollections(false);
-    localStorage.setItem('breadcrumbActiveState', 'myCollections');
   };
 
   return (
     <div>
       <div className='container my-3'>
-        <Breadcrumb className='fw-bold'>
-          <Breadcrumb.Item onClick={handleShowAllCollections} active={showAllCollections}>
-            <Link to="/">Home</Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item onClick={handleShowMyCollections} active={!showAllCollections}>
-            My Collections
-          </Breadcrumb.Item>
+        <Tabs
+          id="collection-tabs"
+          activeKey={activeTab}
+          onSelect={handleTabSelect}
+          className="mb-3"
+        >
+          <Tab eventKey="allCollections" title="All Collections">
+            <AllCollections userData={userData} />
+          </Tab>
+          <Tab eventKey="myCollections" title="My Collections">
+            {currentUser && <MyCollections userData={userData} />}
+          </Tab>
           {userData && userData.admin && (
-              <Breadcrumb.Item>
-                <Link to="/admin-dashboard">Admin Dashboard</Link>
-              </Breadcrumb.Item>
-            )}
-        </Breadcrumb>
-
-        <div className='container bg-light rounded-4'>
-          {showAllCollections ? (
-            <AllCollections />
-          ) : (
-            <MyCollections userData={userData} />
+            <Tab eventKey="adminDashboard" title="Admin Dashboard">
+              <AdminDashboard />
+            </Tab>
           )}
-        </div>
+        </Tabs>
       </div>
     </div>
   );

@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from "axios";
-import Swal from 'sweetalert2';
 import Switch from 'react-switch';
-import { AuthContext } from '../../context/AuthContext';
 import formatDate from './FormatDate';
-// import handleDelete from '../utilities/HandleDelete';
 import handleStatusToggle from './/HandleStatusToggle';
 import handleDeleteAll from './HandleDeleteAll';
 import handleStatusToggleAll from './HandleStatusToggleAll';
@@ -14,7 +11,6 @@ import { faLockOpen, faLock, faTrashCan } from "@fortawesome/free-solid-svg-icon
 
 function AdminDashboard() {
   const [data, setData] = useState([]);
-  const {currentUser, dispatch} = useContext(AuthContext);
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
@@ -111,10 +107,6 @@ function AdminDashboard() {
       </div>
     </div>
   )
-}
-
-function findUserByEmail(email, data) {
-  return data.find(userdata => userdata.email === email);
 }
 
 export default AdminDashboard;

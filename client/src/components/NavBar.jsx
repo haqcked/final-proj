@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { AuthContext } from '../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
 
 function NavBar() {
   const { currentUser, handleLogout } = useContext(AuthContext);
@@ -19,7 +21,8 @@ function NavBar() {
             {currentUser ? (
               <>
                 Signed in with: {currentUser.email}
-                <button className='btn btn-secondary ms-3' onClick={handleLogout}>Logout
+                <button className='btn btn-outline-secondary ms-3' onClick={handleLogout}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
                 </button>
               </>
             ) : (

@@ -5,7 +5,7 @@ import axios from 'axios';
 import EditCollectionModal from './EditCollectionModal';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 
 
 function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) {
@@ -85,15 +85,12 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) 
         </ol>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-primary" onClick={handleEdit}>
-          Edit
+        <Button variant="outline-primary" onClick={handleEdit} title='Edit collection'>
+          <FontAwesomeIcon icon={faPenToSquare} />
         </Button>
-        <Button variant="outline-danger" onClick={handleDelete}>
-        <FontAwesomeIcon icon={faTrashCan} />
+        <Button variant="outline-danger" onClick={handleDelete} title='Delete collection'>
+          <FontAwesomeIcon icon={faTrashCan} />
         </Button>
-        {/* <Button variant="outline-danger" onClick={handleDelete}>
-          Delete
-        </Button> */}
       </Modal.Footer>
       {showEditModal && (
         <EditCollectionModal
