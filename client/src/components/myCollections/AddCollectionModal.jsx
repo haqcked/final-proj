@@ -50,7 +50,7 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
     if (validationErrors.title === '' && validationErrors.description === '') {
       console.log(newCollectionData)
       try {
-        await axios.post('http://localhost:4000/collections', {
+        await axios.post(`${process.env.REACT_APP_SERVERURL}/collections`, {
           title: newCollectionData.title,
           description: newCollectionData.description,
           account_id: userData.id,

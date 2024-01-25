@@ -19,7 +19,7 @@ const Home = () => {
     const storedState = localStorage.getItem('activeTab');
     setActiveTab(storedState || 'allCollections');
 
-    axios.get('http://localhost:4000/', { params: { email: currentUser?.email } })
+    axios.get(`${process.env.REACT_APP_SERVERURL}/`, { params: { email: currentUser?.email } })
       .then(res => setUserData(res.data[0]))
       .catch(err => console.log(err));
   }, [currentUser]);
@@ -34,7 +34,6 @@ const Home = () => {
   };
 
   return (
-    <div>
       <div className='container my-3'>
         <Tabs
           id="collection-tabs"
@@ -55,7 +54,6 @@ const Home = () => {
           )}
         </Tabs>
       </div>
-    </div>
   );
 };
 

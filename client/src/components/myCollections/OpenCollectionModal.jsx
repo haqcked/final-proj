@@ -24,7 +24,7 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) 
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:4000/collections/${item.id}`);
+        await axios.delete(`${process.env.REACT_APP_SERVERURL}/collections/${item.id}`);
         onHide();
         fetchCollections();
         Swal.fire({
@@ -70,19 +70,18 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) 
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Description: {item.description}</p>
-        {/* <hr className="mb-4" /> */}
-        <ol>
-          {item.custom_string1_name && (
-            <li>{item.custom_string1_name.charAt(0).toUpperCase() + item.custom_string1_name.slice(1)}</li>
-          )}
-          {item.custom_string2_name && (
-            <li>{item.custom_string2_name.charAt(0).toUpperCase() + item.custom_string2_name.slice(1)}</li>
-          )}
-          {item.custom_string3_name && (
-            <li>{item.custom_string3_name.charAt(0).toUpperCase() + item.custom_string3_name.slice(1)}</li>
-          )}
-        </ol>
+          <p>Description: {item.description}</p>
+          <ol>
+            {item.custom_string1_name && (
+              <li>{item.custom_string1_name.charAt(0).toUpperCase() + item.custom_string1_name.slice(1)}</li>
+            )}
+            {item.custom_string2_name && (
+              <li>{item.custom_string2_name.charAt(0).toUpperCase() + item.custom_string2_name.slice(1)}</li>
+            )}
+            {item.custom_string3_name && (
+              <li>{item.custom_string3_name.charAt(0).toUpperCase() + item.custom_string3_name.slice(1)}</li>
+            )}
+          </ol>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-primary" onClick={handleEdit} title='Edit collection'>

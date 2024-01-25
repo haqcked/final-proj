@@ -14,7 +14,7 @@ const handleDelete = async ({ item, fetchCollections }) => {
     });
 
     if (result.isConfirmed) {
-      await axios.delete(`http://localhost:4000/collections/${item.id}`);
+      await axios.delete(`${process.env.REACT_APP_SERVERURL}/collections/${item.id}`);
       fetchCollections();
       Swal.fire({
         title: 'Deleted!',

@@ -16,7 +16,7 @@ const handleStatusToggle = async (id, currentStatus) => {
 
   if (result.isConfirmed) {
     try {
-      const res = await axios.put(`http://localhost:4000/update-status/${id}`, { status: newStatus });
+      const res = await axios.put(`${process.env.REACT_APP_SERVERURL}/update-status/${id}`, { status: newStatus });
 
       Swal.fire({
         icon: 'success',

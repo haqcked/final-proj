@@ -32,7 +32,7 @@ function SignUp() {
       validationErrors.password === ""
     ) {
       try {
-        const res = await axios.post('http://localhost:4000/sign-up', values);
+        const res = await axios.post(`${process.env.REACT_APP_SERVERURL}/sign-up`, values);
         console.log(res);
         navigate('/login');
         Swal.fire({

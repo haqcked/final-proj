@@ -28,7 +28,7 @@ const handleStatusToggleAll = async (selectedRows, data) => {
         const currentStatus = data.find((userdata) => userdata.id === id)?.status;
         const newStatus = currentStatus === true ? false : true;
 
-        return axios.put(`http://localhost:4000/update-status/${id}`, { status: newStatus });
+        return axios.put(`${process.env.REACT_APP_SERVERURL}/update-status/${id}`, { status: newStatus });
       }));
 
       console.log("API Responses:", responses);

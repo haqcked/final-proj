@@ -14,7 +14,7 @@ function AdminDashboard() {
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/accounts')
+    axios.get(`${process.env.REACT_APP_SERVERURL}/accounts`)
     .then(res => setData(res.data))
     .catch(err => console.log(err));
   }, [])
@@ -47,7 +47,7 @@ function AdminDashboard() {
   };
 
   return (
-    <div>
+
       <div className='container'>
         <div className='d-flex vh-100 justify-content-center align-items-start pt-5'>
           <div className='w-100 bg-white rounded p-3 shadow p-3 mb-5 bg-body rounded'>
@@ -105,7 +105,7 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
-    </div>
+
   )
 }
 

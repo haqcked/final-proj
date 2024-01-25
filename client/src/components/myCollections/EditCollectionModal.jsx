@@ -10,7 +10,7 @@ function EditCollectionModal({ show, onHide, fetchCollections, item, onSave }) {
 
   const handleSaveEdit = async () => {
     try {
-      await axios.put(`http://localhost:4000/collections/${editedItem.id}`, editedItem);
+      await axios.put(`${process.env.REACT_APP_SERVERURL}/collections/${editedItem.id}`, editedItem);
       fetchCollections();
       onSave();
       Swal.fire({

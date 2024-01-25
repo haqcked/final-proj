@@ -18,7 +18,7 @@ const Collections = ({ userData }) => {
   const fetchCollections = async () => {
     try {
       if (userData?.id) {
-        const response = await axios.get(`http://localhost:4000/collections/${userData.id}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVERURL}/collections/${userData.id}`);
         setData(response.data);
         setLoading(false);
       }

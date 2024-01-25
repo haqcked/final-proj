@@ -27,7 +27,7 @@ function Login() {
     setErrors(validationErrors);
 
     if (validationErrors.email === "" && validationErrors.password === "") {
-      axios.post('http://localhost:4000/login', values)
+      axios.post(`${process.env.REACT_APP_SERVERURL}/login`, values)
         .then(res => {
           if (res.data === "Success") {
             dispatch({ type: 'LOGIN', payload: values });
@@ -85,7 +85,6 @@ function Login() {
             </Button>
           </Form>
           <p className="text-center mt-3">Don't have an account?<span><a href='/sign-up' style={{ cursor: 'pointer', color: 'blue', textDecoration: 'none' }}> Register here.</a></span></p>
-
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ const handleDeleteAll = async (selectedRows) => {
     });
 
     if (result.isConfirmed) {
-      const res = await axios.delete(`http://localhost:4000/delete-multiple`, { data: { ids: selectedRows } });
+      const res = await axios.delete(`${process.env.REACT_APP_SERVERURL}/delete-multiple`, { data: { ids: selectedRows } });
 
       Swal.fire({
         icon: 'success',

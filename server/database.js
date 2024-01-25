@@ -5,16 +5,8 @@ const pool = new Pool({
   user: process.env.USER,
   password: process.env.PASSWORD,
   host: process.env.HOST,
-  port: process.env.DBPORT,
-  database: "user_accounts"
+  port: process.env.PORT,
+  database: process.env.DATABASE
 });
-
-// `CREATE TABLE accounts (
-//   user_id SERIAL PRIMARY KEY,
-//   name VARCHAR ( 50 ) UNIQUE NOT NULL,
-//   email VARCHAR ( 50 ) UNIQUE NOT NULL,
-//   password VARCHAR ( 40 ) NOT NULL,
-//   status BOOLEAN DEFAULT true
-// );`
 
 module.exports = pool

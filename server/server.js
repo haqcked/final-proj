@@ -247,7 +247,7 @@ app.post('/login', (req, res) => {
   })
 });
 
-const port = process.env.PORT || 4000;
+const port = 4000 || process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
