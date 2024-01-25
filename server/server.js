@@ -79,7 +79,6 @@ app.get('/collections', async (req, res) => {
   }
 });
 
-
 // getting the collections based on account_id
 app.get('/collections/:accountId', async (req, res) => {
   try {
@@ -134,9 +133,7 @@ app.post('/collections', async (req, res) => {
       custom_string3_state,
       custom_string3_name,
     ];
-
     await pool.query(sql, values);
-
     return res.json({ success: true, message: 'Collection added successfully' });
   } catch (err) {
     console.error(err);
@@ -193,7 +190,6 @@ app.put('/collections/:collectionId', async (req, res) => {
     return res.status(500).json({ success: false, error: err.message });
   }
 });
-
 
 // Delete a collection
 app.delete('/collections/:collectionId', async (req, res) => {

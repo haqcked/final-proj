@@ -34,26 +34,26 @@ const Home = () => {
   };
 
   return (
-      <div className='container my-3'>
-        <Tabs
-          id="collection-tabs"
-          activeKey={activeTab}
-          onSelect={handleTabSelect}
-          className="mb-3"
-        >
-          <Tab eventKey="allCollections" title="All Collections">
-            <AllCollections userData={userData} />
+    <div className='container my-3'>
+      <Tabs
+        id="collection-tabs"
+        activeKey={activeTab}
+        onSelect={handleTabSelect}
+        className="mb-3"
+      >
+        <Tab eventKey="allCollections" title="All Collections">
+          <AllCollections userData={userData} />
+        </Tab>
+        <Tab eventKey="myCollections" title="My Collections">
+          {currentUser && <MyCollections userData={userData} />}
+        </Tab>
+        {userData && userData.admin && (
+          <Tab eventKey="adminDashboard" title="Admin Dashboard">
+            <AdminDashboard />
           </Tab>
-          <Tab eventKey="myCollections" title="My Collections">
-            {currentUser && <MyCollections userData={userData} />}
-          </Tab>
-          {userData && userData.admin && (
-            <Tab eventKey="adminDashboard" title="Admin Dashboard">
-              <AdminDashboard />
-            </Tab>
-          )}
-        </Tabs>
-      </div>
+        )}
+      </Tabs>
+    </div>
   );
 };
 

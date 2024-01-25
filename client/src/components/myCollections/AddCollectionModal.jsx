@@ -36,7 +36,6 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
     }
   };
 
-
   const resetForm = () => {
     setNewCollectionData(initialCollectionData);
     setErrors({});
@@ -113,7 +112,6 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
             {errors.description && <span className="text-danger">{errors.description}</span>}
           </Form.Group>
           {/* Add Custom String Fields */}
-
 
           <Form.Group className="mb-3" controlId="customString1">
             <Form.Check

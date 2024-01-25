@@ -47,7 +47,6 @@ function SignUp() {
     }
   };
 
-
   return (
     <div className="container">
       <div className="row d-flex justify-content-center align-items-start mt-5 vh-100">
