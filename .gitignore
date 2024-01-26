@@ -23,3 +23,11 @@ yarn-error.log*
 node_modules/
 .env
 package-lock.json
+
+# Ignore client-specific files
+client/node_modules/
+client/package-lock.json
+
+# Ignore server-specific files
+server/node_modules/
+server/package-lock.json
