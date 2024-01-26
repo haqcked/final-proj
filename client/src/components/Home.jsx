@@ -6,19 +6,17 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useNavigate } from 'react-router-dom';
 import AdminDashboard from './admin/AdminDashboard';
-import AllCollections from './allCollections/AllCollections';
-
-
+import Collections from './allCollections/Collections';
 
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
-  const [activeTab, setActiveTab] = useState('allCollections');
+  const [activeTab, setActiveTab] = useState('collections');
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedState = localStorage.getItem('activeTab');
-    setActiveTab(storedState || 'allCollections');
+    setActiveTab(storedState || 'collections');
 
     axios.get(`${process.env.REACT_APP_SERVERURL}/`, { params: { email: currentUser?.email } })
       .then(res => setUserData(res.data[0]))
@@ -42,8 +40,8 @@ const Home = () => {
         onSelect={handleTabSelect}
         className="mb-3"
       >
-        <Tab eventKey="allCollections" title="All Collections">
-          <AllCollections userData={userData} />
+        <Tab eventKey="collections" title="All Collections">
+          <Collections userData={userData} />
         </Tab>
         <Tab eventKey="myCollections" title="My Collections">
           {currentUser && <MyCollections userData={userData} />}
