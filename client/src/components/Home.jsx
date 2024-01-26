@@ -6,7 +6,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useNavigate } from 'react-router-dom';
 import AdminDashboard from './admin/AdminDashboard';
-import Collections from './allCollections/Collections';
+import Collections from './homeCollections/Collections';
 
 const Home = () => {
   const { currentUser } = useContext(AuthContext);
