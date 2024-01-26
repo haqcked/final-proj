@@ -10,7 +10,6 @@ import { faFolderPlus, faEye } from "@fortawesome/free-solid-svg-icons"
 
 const Collections = ({ userData }) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [modalShow, setModalShow] = useState(false);
   const [openCollectionModal, setOpenCollectionModal] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState(null);
@@ -20,7 +19,6 @@ const Collections = ({ userData }) => {
       if (userData?.id) {
         const response = await axios.get(`${process.env.REACT_APP_SERVERURL}/collections/${userData.id}`);
         setData(response.data);
-        setLoading(false);
       }
     } catch (error) {
       console.error(error);
@@ -29,6 +27,7 @@ const Collections = ({ userData }) => {
 
   useEffect(() => {
     fetchCollections();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   const handleShowModal = () => {
@@ -75,11 +74,11 @@ const Collections = ({ userData }) => {
                   {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
                   <p className='text-muted fs-6 fst-italic mb-1'>by {userData.name}</p>
                 </Card.Title>
-                <Card.Text>
-                  <div className='text-muted text-wrap' style={{ maxHeight: '3.2rem', overflow: 'hidden' }}>
+                <Card.Title>
+                  <h6 className='text-muted text-wrap' style={{ maxHeight: '3.2rem', overflow: 'hidden' }}>
                     Description: {item.description}
-                  </div>
-                </Card.Text>
+                  </h6>
+                </Card.Title>
               </Card.Body>
               <Card.Body className='d-flex justify-content-end align-items-center p-0'>
                 <Button

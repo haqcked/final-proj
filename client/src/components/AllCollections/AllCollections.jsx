@@ -51,11 +51,11 @@ const AllCollections = ({userData}) => {
                 {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
                 <p className='text-muted fs-6 fst-italic mb-1'>by User {item.account_id || 'Unknown'}</p>
               </Card.Title>
-              <Card.Text>
-                  <div className='text-muted text-wrap' style={{ maxHeight: '3.2rem', overflow: 'hidden' }}>
+              <Card.Title>
+                  <h6 className='text-muted text-wrap' style={{ maxHeight: '3.2rem', overflow: 'hidden' }}>
                     Description: {item.description}
-                  </div>
-                </Card.Text>
+                  </h6>
+                </Card.Title>
             </Card.Body>
             <Card.Body className='d-flex justify-content-end align-items-center p-0'>
               <Button

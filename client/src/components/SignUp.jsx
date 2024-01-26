@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Validation from '../validations/SignUpValidation';
@@ -97,7 +97,7 @@ function SignUp() {
               Submit
             </Button>
           </Form>
-          <p className="text-center mt-3">
+          <h6 className="text-center mt-3">
             Already have an account?
             <span>
               <a
@@ -108,7 +108,7 @@ function SignUp() {
                 Login here.
               </a>
             </span>
-          </p>
+          </h6>
         </div>
       </div>
     </div>

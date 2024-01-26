@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
@@ -66,11 +66,11 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item, userData}) 
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
             <h3>{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</h3>
-            <p className='text-muted fs-6 fst-italic'>by {userData.name}</p>
+            <h6 className='text-muted fs-6 fst-italic'>by {userData.name}</h6>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-          <p>Description: {item.description}</p>
+          <h6>Description: {item.description}</h6>
           <ol>
             {item.custom_string1_name && (
               <li>{item.custom_string1_name.charAt(0).toUpperCase() + item.custom_string1_name.slice(1)}</li>

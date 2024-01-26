@@ -84,7 +84,7 @@ function Login() {
               Submit
             </Button>
           </Form>
-          <p className="text-center mt-3">Don't have an account?<span><a href='/sign-up' style={{ cursor: 'pointer', color: 'blue', textDecoration: 'none' }}> Register here.</a></span></p>
+          <h6 className="text-center mt-3">Don't have an account?<span><a href='/sign-up' style={{ cursor: 'pointer', color: 'blue', textDecoration: 'none' }}> Register here.</a></span></h6>
         </div>
       </div>
     </div>

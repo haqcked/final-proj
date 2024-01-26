@@ -8,11 +8,11 @@ function ShowCollectionModal({ show, onHide, item }) {
       <Modal.Header closeButton>
         <Modal.Title>
           {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
-          <p className='text-muted fs-6 fst-italic'>by User {item.account_id || 'Unknown'}</p>
+          <h6 className='text-muted fs-6 fst-italic'>by User {item.account_id || 'Unknown'}</h6>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Description: {item.description}</p>
+        <h6>Description: {item.description}</h6>
         <ol>
           {item.custom_string1_name && (
             <li>{item.custom_string1_name.charAt(0).toUpperCase() + item.custom_string1_name.slice(1)}</li>
