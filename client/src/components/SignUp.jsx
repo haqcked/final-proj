@@ -35,7 +35,7 @@ function SignUp() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(values),
-          // credentials: 'include', // Include credentials for cookies
+          credentials: 'include',
         });
 
         if (response.ok) {

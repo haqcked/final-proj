@@ -64,7 +64,7 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
             custom_string3_state: newCollectionData.custom_string3_state,
             custom_string3_name: newCollectionData.custom_string3_name,
           }),
-          // credentials: 'include',
+          credentials: 'include',
         });
 
         if (response.ok) {

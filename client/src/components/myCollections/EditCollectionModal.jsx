@@ -14,7 +14,7 @@ function EditCollectionModal({ show, onHide, fetchCollections, item, onSave }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        // credentials: 'include',
+        credentials: 'include',
         body: JSON.stringify(editedItem),
       });
 

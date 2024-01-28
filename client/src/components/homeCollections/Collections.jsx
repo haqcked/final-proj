@@ -18,7 +18,7 @@ const Collections = ({userData}) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_SERVERURL}/collections/`, {
         method: 'GET',
-        // credentials: 'include', // Include credentials if necessary
+        credentials: 'include',
       });
 
       if (!response.ok) {
