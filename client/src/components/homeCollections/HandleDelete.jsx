@@ -15,7 +15,7 @@ const handleDelete = async ({ item, fetchCollections }) => {
     if (result.isConfirmed) {
       const response = await fetch(`${process.env.REACT_APP_SERVERURL}/collections/${item.id}`, {
         method: 'DELETE',
-        credentials: 'include', // Include credentials if necessary
+        // credentials: 'include', // Include credentials if necessary
       });
 
       if (!response.ok) {

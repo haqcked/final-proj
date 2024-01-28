@@ -24,7 +24,7 @@ function OpenCollectionModal({ show, onHide, fetchCollections, item, userData })
       if (result.isConfirmed) {
         await fetch(`${process.env.REACT_APP_SERVERURL}/collections/${item.id}`, {
           method: 'DELETE',
-          credentials: 'include', // Include credentials if necessary
+          // credentials: 'include', // Include credentials if necessary
         });
 
         onHide();
