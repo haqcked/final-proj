@@ -1,4 +1,3 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 
 const handleStatusToggleAll = async (selectedRows, data) => {
@@ -28,7 +27,15 @@ const handleStatusToggleAll = async (selectedRows, data) => {
         const currentStatus = data.find((userdata) => userdata.id === id)?.status;
         const newStatus = currentStatus === true ? false : true;
 
-        return axios.put(`${process.env.REACT_APP_SERVERURL}/update-status/${id}`, { status: newStatus });
+        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/update-status/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status: newStatus }),
+        });
+
+        return response.json();
       }));
 
       console.log("API Responses:", responses);

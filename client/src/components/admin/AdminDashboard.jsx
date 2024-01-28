@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
 import Switch from 'react-switch';
 import formatDate from './FormatDate';
-import handleStatusToggle from './/HandleStatusToggle';
+import handleStatusToggle from './HandleStatusToggle';
 import handleDeleteAll from './HandleDeleteAll';
 import handleStatusToggleAll from './HandleStatusToggleAll';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLockOpen, faLock, faTrashCan } from "@fortawesome/free-solid-svg-icons"
-
 
 function AdminDashboard() {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVERURL}/accounts`)
-    .then(res => setData(res.data))
-    .catch(err => console.log(err));
-  }, [])
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/accounts`);
+        const result = await response.json();
+
+        const sortedData = result.sort((a, b) => a.id - b.id);
+        setData(sortedData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleRowSelect = (id) => {
     const isSelected = selectedRows.includes(id);
@@ -53,15 +61,19 @@ function AdminDashboard() {
           <h2 className='text-center mt-4'>User Accounts</h2>
           <hr className="mt-5 mx-5" />
           <div className='p-4'>
-            <button className='btn btn-danger mx-2' onClick={ () => handleDeleteAll(selectedRows) }> <FontAwesomeIcon icon={faTrashCan} /></button>
-            <button className='btn btn-primary' onClick={ () => handleStatusToggleAll(selectedRows, data) }><FontAwesomeIcon icon={faLock} /> / <FontAwesomeIcon icon={faLockOpen} /></button>
+            <button className='btn btn-danger mx-2' onClick={() => handleDeleteAll(selectedRows)}>
+              <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+            <button className='btn btn-primary' onClick={() => handleStatusToggleAll(selectedRows, data)}>
+              <FontAwesomeIcon icon={faLock} /> / <FontAwesomeIcon icon={faLockOpen} />
+            </button>
           </div>
           <table className='table'>
-          <thead style={{ position: 'sticky', top: '0', zIndex: '1', background: 'white' }}>
+            <thead style={{ position: 'sticky', top: '0', zIndex: '1', background: 'white' }}>
               <tr>
                 <th>
                   <input className="form-check-input" type="checkbox" onChange={selectAllRows} />
-              </th>
+                </th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -71,8 +83,8 @@ function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {data.map((userdata, index) => {
-                return <tr key={index}>
+              {data.map((userdata, index) => (
+                <tr key={index}>
                   <td>
                     <input
                       className="form-check-input"
@@ -98,13 +110,13 @@ function AdminDashboard() {
                     </span>
                   </td>
                 </tr>
-              })}
+              ))}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default AdminDashboard;

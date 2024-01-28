@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 import CollectionValidation from '../../validations/CollectionValidation';
 import Swal from 'sweetalert2';
 
@@ -47,28 +46,40 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
     setErrors(validationErrors);
 
     if (validationErrors.title === '' && validationErrors.description === '') {
-      console.log(newCollectionData)
+      console.log(newCollectionData);
       try {
-        await axios.post(`${process.env.REACT_APP_SERVERURL}/collections`, {
-          title: newCollectionData.title,
-          description: newCollectionData.description,
-          account_id: userData.id,
-          custom_string1_state: newCollectionData.custom_string1_state,
-          custom_string1_name: newCollectionData.custom_string1_name,
-          custom_string2_state: newCollectionData.custom_string2_state,
-          custom_string2_name: newCollectionData.custom_string2_name,
-          custom_string3_state: newCollectionData.custom_string3_state,
-          custom_string3_name: newCollectionData.custom_string3_name,
+        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/collections`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: newCollectionData.title,
+            description: newCollectionData.description,
+            account_id: userData.id,
+            custom_string1_state: newCollectionData.custom_string1_state,
+            custom_string1_name: newCollectionData.custom_string1_name,
+            custom_string2_state: newCollectionData.custom_string2_state,
+            custom_string2_name: newCollectionData.custom_string2_name,
+            custom_string3_state: newCollectionData.custom_string3_state,
+            custom_string3_name: newCollectionData.custom_string3_name,
+          }),
+          credentials: 'include',
         });
-        await fetchCollections();
-        resetForm();
-        handleClose();
-        Swal.fire({
-          icon: 'success',
-          title: 'New collection added successful!',
-          showConfirmButton: false,
-          timer: 2000
-        })
+
+        if (response.ok) {
+          await fetchCollections();
+          resetForm();
+          handleClose();
+          Swal.fire({
+            icon: 'success',
+            title: 'New collection added successful!',
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        } else {
+          console.error('Failed to add collection:', response.statusText);
+        }
       } catch (error) {
         console.error(error);
         Swal.fire('Error!', 'Something went wrong while adding the collection.', 'error');
@@ -111,7 +122,6 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
             <div className="text-muted fw-lighter">{characterCount} / 255</div>
             {errors.description && <span className="text-danger">{errors.description}</span>}
           </Form.Group>
-          {/* Add Custom String Fields */}
 
           <Form.Group className="mb-3" controlId="customString1">
             <Form.Check
@@ -172,7 +182,6 @@ const AddCollectionModal = ({ show, handleClose, userData, fetchCollections }) =
               />
             )}
           </Form.Group>
-
         </Form>
       </Modal.Body>
       <Modal.Footer>

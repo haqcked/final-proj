@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const handleDelete = async ({ item, fetchCollections }) => {
@@ -14,8 +13,17 @@ const handleDelete = async ({ item, fetchCollections }) => {
     });
 
     if (result.isConfirmed) {
-      await axios.delete(`${process.env.REACT_APP_SERVERURL}/collections/${item.id}`);
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/collections/${item.id}`, {
+        method: 'DELETE',
+        credentials: 'include', // Include credentials if necessary
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       fetchCollections();
+
       Swal.fire({
         title: 'Deleted!',
         text: 'Your collection has been deleted.',

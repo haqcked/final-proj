@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ShowCollectionModal from './ShowCollectionModal';
@@ -17,10 +16,18 @@ const Collections = ({userData}) => {
 
   const fetchCollections = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVERURL}/collections/`);
-      setData(response.data);
-    }
-    catch (error) {
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/collections/`, {
+        method: 'GET',
+        credentials: 'include', // Include credentials if necessary
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setData(responseData);
+    } catch (error) {
       console.error(error);
     }
   };

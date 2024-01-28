@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Validation from '../validations/SignUpValidation';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
 
 function SignUp() {
   const [values, setValues] = useState({
@@ -17,14 +15,13 @@ function SignUp() {
   const navigate = useNavigate();
 
   const handleInput = (e) => {
-    setValues(prev => ({...prev, [e.target.name]: e.target.value}))
+    setValues(prev => ({ ...prev, [e.target.name]: e.target.value }))
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = Validation(values);
     setErrors(validationErrors);
-    console.log(values);
 
     if (
       validationErrors.name === "" &&
@@ -32,15 +29,26 @@ function SignUp() {
       validationErrors.password === ""
     ) {
       try {
-        const res = await axios.post(`${process.env.REACT_APP_SERVERURL}/sign-up`, values);
-        console.log(res);
-        navigate('/login');
-        Swal.fire({
-          icon: 'success',
-          title: 'Account created successfully!',
-          showConfirmButton: false,
-          timer: 2000
+        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/sign-up`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+          credentials: 'include', // Include credentials for cookies
         });
+
+        if (response.ok) {
+          navigate('/login');
+          Swal.fire({
+            icon: 'success',
+            title: 'Account created successfully!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        } else {
+          console.error('Failed to create account:', response.statusText);
+        }
       } catch (err) {
         console.error(err);
       }
@@ -64,7 +72,6 @@ function SignUp() {
                 name='name'
               />
               {errors.name && <span className='text-danger'>{errors.name}</span>}
-
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -77,7 +84,6 @@ function SignUp() {
                 onChange={handleInput}
               />
               {errors.email && <span className='text-danger'>{errors.email}</span>}
-
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -90,7 +96,6 @@ function SignUp() {
                 onChange={handleInput}
               />
               {errors.password && <span className='text-danger'>{errors.password}</span>}
-
             </Form.Group>
 
             <Button className="rounded-4" variant="primary" type="submit">
@@ -115,4 +120,4 @@ function SignUp() {
   );
 }
 
-export default SignUp
+export default SignUp;

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 
 function EditCollectionModal({ show, onHide, fetchCollections, item, onSave }) {
@@ -10,7 +9,20 @@ function EditCollectionModal({ show, onHide, fetchCollections, item, onSave }) {
 
   const handleSaveEdit = async () => {
     try {
-      await axios.put(`${process.env.REACT_APP_SERVERURL}/collections/${editedItem.id}`, editedItem);
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/collections/${editedItem.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(editedItem),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      await response.json();
       fetchCollections();
       onSave();
       Swal.fire({
@@ -18,7 +30,7 @@ function EditCollectionModal({ show, onHide, fetchCollections, item, onSave }) {
         text: 'Your collection has been updated.',
         icon: 'success',
         timer: 1500,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
     } catch (error) {
       console.error('Error updating collection:', error);

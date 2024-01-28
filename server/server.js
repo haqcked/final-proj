@@ -5,7 +5,13 @@ const pool = require("./database");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    // origin: "http://localhost:3000", // Replace with your client's origin
+    origin: process.env.ORIGIN,
+    credentials: true
+  })
+)
 
 // getting userData
 app.get('/', async (req, res) => {

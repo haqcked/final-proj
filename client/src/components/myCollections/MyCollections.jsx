@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import AddCollectionModal from './AddCollectionModal';
 import OpenCollectionModal from './OpenCollectionModal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFolderPlus, faEye } from "@fortawesome/free-solid-svg-icons"
-
 
 const Collections = ({ userData }) => {
   const [data, setData] = useState([]);
@@ -17,8 +15,11 @@ const Collections = ({ userData }) => {
   const fetchCollections = async () => {
     try {
       if (userData?.id) {
-        const response = await axios.get(`${process.env.REACT_APP_SERVERURL}/collections/${userData.id}`);
-        setData(response.data);
+        const response = await fetch(`${process.env.REACT_APP_SERVERURL}/collections/${userData.id}`);
+        if (response.ok) {
+          const responseData = await response.json();
+          setData(responseData);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -27,7 +28,7 @@ const Collections = ({ userData }) => {
 
   useEffect(() => {
     fetchCollections();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   const handleShowModal = () => {
@@ -41,7 +42,6 @@ const Collections = ({ userData }) => {
   const handleOpenCollectionModal = (collection) => {
     setSelectedCollection(collection);
     setOpenCollectionModal(true);
-    console.log(collection)
   };
 
   const handleCloseCollectionModal = () => {

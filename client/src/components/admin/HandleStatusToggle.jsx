@@ -1,4 +1,3 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 
 const handleStatusToggle = async (id, currentStatus) => {
@@ -16,7 +15,13 @@ const handleStatusToggle = async (id, currentStatus) => {
 
   if (result.isConfirmed) {
     try {
-      await axios.put(`${process.env.REACT_APP_SERVERURL}/update-status/${id}`, { status: newStatus });
+      await fetch(`${process.env.REACT_APP_SERVERURL}/update-status/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
 
       Swal.fire({
         icon: 'success',

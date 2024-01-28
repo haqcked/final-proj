@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
 import MyCollections from './myCollections/MyCollections';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
@@ -14,13 +13,31 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState('collections');
   const navigate = useNavigate();
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/?email=${currentUser?.email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setUserData(data[0]);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   useEffect(() => {
     const storedState = localStorage.getItem('activeTab');
     setActiveTab(storedState || 'collections');
-
-    axios.get(`${process.env.REACT_APP_SERVERURL}/`, { params: { email: currentUser?.email } })
-      .then(res => setUserData(res.data[0]))
-      .catch(err => console.log(err));
+    fetchData();
+     // eslint-disable-next-line
   }, [currentUser]);
 
   const handleTabSelect = (key) => {

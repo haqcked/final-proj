@@ -1,4 +1,3 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 
 const handleDeleteAll = async (selectedRows) => {
@@ -24,7 +23,13 @@ const handleDeleteAll = async (selectedRows) => {
     });
 
     if (result.isConfirmed) {
-      await axios.delete(`${process.env.REACT_APP_SERVERURL}/delete-multiple`, { data: { ids: selectedRows } });
+      await fetch(`${process.env.REACT_APP_SERVERURL}/delete-multiple`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ids: selectedRows }),
+      });
 
       Swal.fire({
         icon: 'success',
